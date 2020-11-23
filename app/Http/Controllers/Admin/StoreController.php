@@ -12,4 +12,20 @@ class StoreController extends Controller
 
         return view('admin.stores.index', compact('stores'));
     }
+
+    public function create(){
+        $users = \App\User::all(['id', 'name']);
+
+        return view('admin.stores.create', compact('users'));
+    }
+
+    public function store(Request $request){
+
+        $data = $request->all();
+
+        $user = \App\User::find($data['user']);
+        $store = $user->store()->create($data);
+
+        return $store;
+    }
 }
