@@ -5,7 +5,9 @@
 
 <h1>Atualizar Loja</h1>
 <form action="{{route('admin.stores.update', ['store' => $store->id])}}" method="POST">
-    <input type="hidden" name="_token" value="{{csrf_token()}}">
+    @csrf
+    @method("PUT")
+
     <div class="form-group">
         <label>Nome da Loja</label>
         <input type="text" name="name" class="form-control" value="{{$store->name}}">
