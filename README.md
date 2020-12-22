@@ -36,4 +36,16 @@ Esse projeto foi desenvolvido utilizando as seguintes tecnologias
     # Dar permissões
     $chmod -R 775 framework
 
+    # Subir o server
+    $php artisan serve
+
+    # Atualizar o arquivo env com as configurações de conexão de banco de dados
+    -
+
+    # Executar as migrations
+    $php artisan migrate
+
+    # Popular com as seed o banco de dados
+    $php artisan db:seed
+
 ```
