@@ -28,24 +28,24 @@ Esse projeto foi desenvolvido utilizando as seguintes tecnologias
     $ git clone https://github.com/o-brenoalmeida/marketplace_laravel6.git
 
     # Entrar no diretório
-    $cd cd storage/
+    $ cd storage/
 
     # Criar os diretórios dentros de storage
-    $mkdir -p framework/{sessions,views,cache}
+    $ mkdir -p framework/{sessions,views,cache}
 
     # Dar permissões
-    $chmod -R 775 framework
+    $ chmod -R 775 framework
 
     # Subir o server
-    $php artisan serve
+    $ php artisan serve
 
     # Atualizar o arquivo env com as configurações de conexão de banco de dados
     -
 
     # Executar as migrations
-    $php artisan migrate
+    $ php artisan migrate
 
     # Popular com as seed o banco de dados
-    $php artisan db:seed
+    $ php artisan db:seed
 
 ```
