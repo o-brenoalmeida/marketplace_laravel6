@@ -62,6 +62,11 @@
     </div>
 
     <div class="form-group">
+        <label>Fotos do produto</label>
+        <input type="file" name="photos[]" class="form-control" multiple>
+    </div>
+
+    <div class="form-group">
         <label>Slug</label>
         <input type="text" name="slug" id="slug" class="form-control @error('slug') is-invalid @enderror" value="{{old('slug')}}">
 
