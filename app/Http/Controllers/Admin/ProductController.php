@@ -15,7 +15,8 @@ class ProductController extends Controller
 
     private $product;
 
-    public function __construct(Product $product){
+    public function __construct(Product $product)
+    {
         $this->product = $product;
     }
 
@@ -43,7 +44,6 @@ class ProductController extends Controller
         $categories = \App\Category::all(['id', 'name']);
 
         return view('admin.products.create', compact('categories'));
-        
     }
 
     /**
@@ -54,15 +54,16 @@ class ProductController extends Controller
      */
     public function store(ProductRequest $request)
     {
-      
+
         $data = $request->all();
+        $categories = $request->get('categories', null);
 
         $store = auth()->user()->store;
         $product = $store->products()->create($data);
 
-        $product->categories()->sync($data['categories']);
+        $product->categories()->sync($categories);
 
-        if($request->hasFile('photos')){
+        if ($request->hasFile('photos')) {
             $images = $this->imageUpload($request->file('photos'), 'image');
 
             // inserção destas imagens ()
@@ -98,7 +99,6 @@ class ProductController extends Controller
         $categories = \App\Category::all(['id', 'name']);
 
         return view('admin.products.edit', compact('product', 'categories'));
-
     }
 
     /**
@@ -111,12 +111,16 @@ class ProductController extends Controller
     public function update(ProductRequest $request, $product)
     {
         $data = $request->all();
+        $categories = $request->get('categories', null);
+
 
         $product = $this->product->find($product);
         $product->update($data);
-        $product->categories()->sync($data['categories']);
 
-        if($request->hasFile('photos')){
+        if (!is_null($categories))
+            $product->categories()->sync($categories);
+
+        if ($request->hasFile('photos')) {
             $images = $this->imageUpload($request->file('photos'), 'image');
 
             // inserção destas imagens ()
@@ -142,6 +146,4 @@ class ProductController extends Controller
         flash('Produto removido com sucesso')->success();
         return redirect()->route('admin.products.index');
     }
-
-    
 }
