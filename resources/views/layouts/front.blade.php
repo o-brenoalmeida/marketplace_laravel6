@@ -30,9 +30,12 @@
                 <li class="nav-item @if(request()->is('/')) active @endif">
                     <a class="nav-link" href="{{route('home')}}">Home <span class="sr-only">(current)</span></a>
                 </li>
-            </ul>
 
-            <ul class="navbar-nav mr-auto">
+            @foreach($categories as $category)
+            <li class="nav-item">
+                <a class="nav-link" href="#">{{$category->name}} </a>
+            </li>
+            @endforeach
                 <li class="nav-item @if(request()->is('admin/stores*')) active @endif">
                     <a class="nav-link" href="{{route('admin.stores.index')}}">Lojas <span class="sr-only">(current)</span></a>
                 </li>
