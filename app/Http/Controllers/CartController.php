@@ -15,7 +15,15 @@ class CartController extends Controller
 
     public function add(Request $request)
     {
-        $product = $request->get('product');
+        $productData = $request->get('product');
+
+        $product = \App\Product::whereSlug($productData['slug']);
+
+        //verificar se é um produto válido
+        if (!$product->count() || $productData['amount'] == 0) return redirect()->route('home');
+
+        $product = array_merge($productData, 
+                                $product->first(['name', 'price'])->toArray());
 
         // verificar se existe sessão para os produtos
         if (session()->has('cart')) {
@@ -30,8 +38,6 @@ class CartController extends Controller
             } else {
                 session()->push('cart', $product);
             }
-
-            
         } else {
             // não existindo, eu crio esta sessão com o primeiro produto
             $products[] = $product;
