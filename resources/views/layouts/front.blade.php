@@ -31,11 +31,6 @@
                     <a class="nav-link" href="{{route('home')}}">Home <span class="sr-only">(current)</span></a>
                 </li>
 
-            @foreach($categories as $category)
-            <li class="nav-item @if(request()->is('category/' . $category->slug)) active @endif">
-                <a class="nav-link" href="{{route('category.single', ['slug'=> $category->slug])}}">{{$category->name}} </a>
-            </li>
-            @endforeach
                 <li class="nav-item @if(request()->is('admin/stores*')) active @endif">
                     <a class="nav-link" href="{{route('admin.stores.index')}}">Lojas <span class="sr-only">(current)</span></a>
                 </li>
