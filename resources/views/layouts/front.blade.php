@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Marketplace L6</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{asset('css/app.css')}}">
     <style>
         .front.row {
             margin-bottom: 40px;
@@ -42,11 +42,11 @@
                         <a class="nav-link" href="{{route('admin.categories.index')}}">Categorias</a>
                     </li>
                 @else
-                @foreach($categories as $category)
-                    <li class="nav-item @if(request()->is('/category' . $category->slug)) active @endif">
-                        <a href="{{route('category.single', ['slug' => $category->slug])}}" class="nav-link">{{$category->name}}</a>
-                    </li>
-                @endforeach
+                    @foreach($categories as $category)
+                        <li class="nav-item @if(request()->is('category/' . $category->slug)) active @endif">
+                            <a href="{{route('category.single', ['slug' => $category->slug])}}" class="nav-link">{{$category->name}}</a>
+                        </li>
+                    @endforeach
                 @endauth
             </ul>
 
@@ -81,7 +81,7 @@
 src="https://code.jquery.com/jquery-2.2.4.min.js"
 integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
 crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
+<script src="{{asset('js/app.js')}}"></script>
 
     @yield('scripts')
 </body>
