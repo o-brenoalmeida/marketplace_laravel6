@@ -72,3 +72,13 @@ Route::group(['middleware' => ['auth']], function () {
 Auth::routes();
 
 // Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('not', function(){
+    // $user = \App\User::find(41);
+    // $user->notify(new StoreReceiveNewOrder());
+
+    // $notification = $user->notifications->first();
+    // $notification->markAsRead();
+
+    
+});

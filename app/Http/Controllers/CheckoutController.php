@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Payment\PagSeguro\CreditCard;
+use App\Store;
 use Exception;
 use Illuminate\Http\Request;
 
@@ -13,17 +14,17 @@ class CheckoutController extends Controller
         if (!auth()->check()) {
             return redirect()->route('login');
         }
-
+        
         if(!session()->has('cart')) return redirect()->route('home');
-
+        
         $this->makePagSeguroSession();
-
+        
         $cartItems = array_map(function ($line) {
             return $line['amount'] * $line['price'];
         }, session()->get('cart'));
-
+        
         $cartItems = array_sum($cartItems);
-
+        
         return view('checkout', compact('cartItems'));
     }
 
@@ -50,9 +51,12 @@ class CheckoutController extends Controller
             $userOrder = $user->orders()->create($userOrder);
 
             $userOrder->stores()->sync($stores);
+
+            // Notificar loja sobre novo pedido
+            $store = (new Store())->notifyStoreOwners($stores);
             
-            session()->forget('cart');
-            session()->forget('pagseguro_session_code');
+            // session()->forget('cart');
+            // session()->forget('pagseguro_session_code');
 
             return response()->json([
                 'data' => [
