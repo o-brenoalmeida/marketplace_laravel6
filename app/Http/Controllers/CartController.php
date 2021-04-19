@@ -20,7 +20,7 @@ class CartController extends Controller
         $product = \App\Product::whereSlug($productData['slug']);
 
         //verificar se é um produto válido
-        if (!$product->count() || $productData['amount'] == 0) return redirect()->route('home');
+        if (!$product->count() || $productData['amount'] <= 0) return redirect()->route('home');
 
         $product = array_merge($productData, 
                                 $product->first(['name', 'price', 'store_id'])->toArray());

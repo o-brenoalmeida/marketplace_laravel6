@@ -41,10 +41,10 @@ Route::get('/model', function () {
     return $user->all();
 });
 
+Route::get('my-orders', 'UserOrderController@index')->name('user.orders')->middleware('auth');
 
 
-Route::group(['middleware' => ['auth']], function () {
-    Route::get('my-orders', 'UserOrderController@index')->name('user.orders');
+Route::group(['middleware' => ['auth', 'access.control.store.admin']], function () {
 
     Route::prefix('admin')->name('admin.')->namespace('Admin')->group(function () {
         Route::get('notifications', 'NotificationController@notifications')->name('notifications.index');
@@ -76,12 +76,12 @@ Auth::routes();
 
 // Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('not', function(){
+Route::get('not', function () {
     // $user = \App\User::find(41);
     // $user->notify(new StoreReceiveNewOrder());
 
     // $notification = $user->notifications->first();
     // $notification->markAsRead();
 
-    
+
 });
