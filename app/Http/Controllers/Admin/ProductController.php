@@ -27,9 +27,14 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $userStore = auth()->user()->store;
+        $user = auth()->user();
 
-        $products = $userStore->products()->paginate(15);
+        if (!$user->store()->exists()) {
+            flash('É preciso criar uma loja para cadastrar produtos!')->warning();
+            return redirect()->route('admin.stores.index');
+        }
+
+        $products = $user->store->products()->paginate(15);
 
         return view('admin.products.index', compact('products'));
     }
@@ -49,7 +54,7 @@ class ProductController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(ProductRequest $request)
@@ -78,7 +83,7 @@ class ProductController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $product
+     * @param int $product
      * @return \Illuminate\Http\Response
      */
     public function show($product)
@@ -89,7 +94,7 @@ class ProductController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $product
+     * @param int $product
      * @return \Illuminate\Http\Response
      */
     public function edit($product)
@@ -104,8 +109,8 @@ class ProductController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $product
+     * @param \Illuminate\Http\Request $request
+     * @param int $product
      * @return \Illuminate\Http\Response
      */
     public function update(ProductRequest $request, $product)
@@ -135,7 +140,7 @@ class ProductController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $product
+     * @param int $product
      * @return \Illuminate\Http\Response
      */
     public function destroy($product)
